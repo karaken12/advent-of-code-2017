@@ -3,16 +3,10 @@ require_relative 'vector'
 class SpiralMemory
   def SpiralMemory.home_vector(square)
     ring = ring(square)
-    if ring_corners(ring).include? square
-      corner_home_vector(ring, ring_corners(ring).index(square))
-    else
-      raise "cannot calculate for square #{square}"
-    end
-  end
-
-  def SpiralMemory.square_is_last_corner(square)
-    ring = ring(square)
-    square == ring_corners(ring)[3]
+    next_corner = next_corner(square)
+    corner_home_vector = corner_home_vector(ring, ring_corners(ring).index(next_corner))
+    square_corner_vector = square_corner_vector(square, next_corner)
+    home_vector = Vector.new(corner_home_vector.x + square_corner_vector.x, corner_home_vector.y + square_corner_vector.y)
   end
 
   def SpiralMemory.ring(square)
