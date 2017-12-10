@@ -10,13 +10,23 @@ class SpiralMemory
   end
 
   def SpiralMemory.square_is_last_corner(square)
-    root = Math.sqrt(square)
-    root == root.to_i and root % 2 == 1
+    ring = ring(square)
+    square == ring_corners(ring)[3]
   end
 
   def SpiralMemory.ring(square)
     root = Math.sqrt(square)
     ring = ((root+1)/2).ceil
+  end
+
+  def SpiralMemory.ring_corners(ring)
+    corners = [0,0,0,0]
+    side = ring*2 - 1
+    corners[3] = side**2
+    corners[2] = corners[3] - (side-1)
+    corners[1] = corners[2] - (side-1)
+    corners[0] = corners[1] - (side-1)
+    corners
   end
 
   def SpiralMemory.square_home_vector(ring)

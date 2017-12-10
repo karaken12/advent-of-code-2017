@@ -126,5 +126,38 @@ RSpec.describe SpiralMemory do
         expect(ring).to eq 4
       end
     end
+
+    context 'ring 1' do
+      ring = 1
+      it 'has all four corners as 1' do
+        corners = SpiralMemory.ring_corners(ring)
+        expect(corners).to eq [1,1,1,1]
+      end
+    end
+
+    context 'ring 2' do
+      ring = 2
+      it 'has corners 3,5,7,9' do
+        corners = SpiralMemory.ring_corners(ring)
+        expect(corners).to eq [3,5,7,9]
+      end
+    end
+
+    context 'ring 3' do
+      ring = 3
+      it 'has corners 13,17,21,25' do
+        corners = SpiralMemory.ring_corners(ring)
+        expect(corners).to eq [13,17,21,25]
+      end
+    end
+
+    context 'ring 4' do
+      ring = 4
+      it 'has corners 31,.,.,49' do
+        corners = SpiralMemory.ring_corners(ring)
+        expect(corners[0]).to eq 31
+        expect(corners[3]).to eq 49
+      end
+    end
   end
 end
