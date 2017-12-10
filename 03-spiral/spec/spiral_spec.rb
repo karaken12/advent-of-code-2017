@@ -75,18 +75,20 @@ RSpec.describe SpiralMemory do
 
     context 'square 4' do
       square = 4
+      corner = 5
       it 'is in ring 2' do
         ring = SpiralMemory.ring(square)
         expect(ring).to eq 2
       end
       it 'has next corner 5' do
         corner = SpiralMemory.next_corner(square)
-        expect(corner).to eq 5
+        expect(corner).to eq corner
       end
     end
 
     context 'square 5' do
       square = 5
+      corner = 5
       it 'moves 1 down and 1 to the right' do
         vector = SpiralMemory.home_vector(square)
         expect(vector.x).to eq 1
@@ -94,7 +96,12 @@ RSpec.describe SpiralMemory do
       end
       it 'has next corner 5' do
         corner = SpiralMemory.next_corner(square)
-        expect(corner).to eq 5
+        expect(corner).to eq corner
+      end
+      it 'has corner vector [0,0]' do
+        vector = SpiralMemory.square_corner_vector(square, corner)
+        expect(vector.x).to eq 0
+        expect(vector.y).to eq 0
       end
     end
 
@@ -122,25 +129,37 @@ RSpec.describe SpiralMemory do
 
     context 'square 10' do
       square = 10
+      corner = 13
       it 'is in ring 3' do
         ring = SpiralMemory.ring(square)
         expect(ring).to eq 3
       end
       it 'has next corner 13' do
         corner = SpiralMemory.next_corner(square)
-        expect(corner).to eq 13
+        expect(corner).to eq corner
+      end
+      it 'has corner vector [0,3]' do
+        vector = SpiralMemory.square_corner_vector(square, corner)
+        expect(vector.x).to eq 0
+        expect(vector.y).to eq 3
       end
     end
 
     context 'square 16' do
       square = 16
+      corner = 17
       it 'is in ring 3' do
         ring = SpiralMemory.ring(square)
         expect(ring).to eq 3
       end
       it 'has next corner 17' do
         corner = SpiralMemory.next_corner(square)
-        expect(corner).to eq 17
+        expect(corner).to eq corner
+      end
+      it 'has corner vector [-1,0]' do
+        vector = SpiralMemory.square_corner_vector(square, corner)
+        expect(vector.x).to eq -1
+        expect(vector.y).to eq 0
       end
     end
 

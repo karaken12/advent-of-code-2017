@@ -67,4 +67,22 @@ class SpiralMemory
     end
   end
 
+  def SpiralMemory.square_corner_vector(square, corner_square)
+    Vector.new(0,0)
+    mv = corner_square - square
+    corner = ring_corners(ring(square)).index(corner_square)
+    case corner
+    when 0
+      Vector.new(0,mv)
+    when 1
+      Vector.new(-mv,0)
+    when 2
+      Vector.new(0,-mv)
+    when 3
+      Vector.new(mv,0)
+    else
+      raise "Unknwon corner #{corner} (#{corner_square})"
+    end
+  end
+
 end
