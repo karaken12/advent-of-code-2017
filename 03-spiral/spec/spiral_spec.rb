@@ -49,4 +49,42 @@ RSpec.describe SpiralMemory do
       end
     end
   end
+
+  context 'temp' do
+    context 'square 1' do
+      square = 1
+      it 'does not move' do
+        vector = SpiralMemory.home_vector(square)
+        expect(vector.x).to eq 0
+        expect(vector.y).to eq 0
+      end
+    end
+
+    context 'square 9' do
+      square = 9
+      it 'moves 1 up and 1 to the left' do
+        vector = SpiralMemory.home_vector(square)
+        expect(vector.x).to eq -1
+        expect(vector.y).to eq 1
+      end
+    end
+
+    context 'square 25' do
+      square = 25
+      it 'moves 2 up and 2 to the left' do
+        vector = SpiralMemory.home_vector(square)
+        expect(vector.x).to eq -2
+        expect(vector.y).to eq 2
+      end
+    end
+
+    context 'square 49' do
+      square = 49
+      it 'moves 3 up and 3 to the left' do
+        vector = SpiralMemory.home_vector(square)
+        expect(vector.x).to eq -3
+        expect(vector.y).to eq 3
+      end
+    end
+  end
 end
