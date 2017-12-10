@@ -79,6 +79,10 @@ RSpec.describe SpiralMemory do
         ring = SpiralMemory.ring(square)
         expect(ring).to eq 2
       end
+      it 'has next corner 5' do
+        corner = SpiralMemory.next_corner(square)
+        expect(corner).to eq 5
+      end
     end
 
     context 'square 5' do
@@ -87,6 +91,10 @@ RSpec.describe SpiralMemory do
         vector = SpiralMemory.home_vector(square)
         expect(vector.x).to eq 1
         expect(vector.y).to eq -1
+      end
+      it 'has next corner 5' do
+        corner = SpiralMemory.next_corner(square)
+        expect(corner).to eq 5
       end
     end
 
@@ -118,6 +126,10 @@ RSpec.describe SpiralMemory do
         ring = SpiralMemory.ring(square)
         expect(ring).to eq 3
       end
+      it 'has next corner 13' do
+        corner = SpiralMemory.next_corner(square)
+        expect(corner).to eq 13
+      end
     end
 
     context 'square 16' do
@@ -125,6 +137,10 @@ RSpec.describe SpiralMemory do
       it 'is in ring 3' do
         ring = SpiralMemory.ring(square)
         expect(ring).to eq 3
+      end
+      it 'has next corner 17' do
+        corner = SpiralMemory.next_corner(square)
+        expect(corner).to eq 17
       end
     end
 

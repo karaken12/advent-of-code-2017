@@ -50,4 +50,21 @@ class SpiralMemory
       mv = ring - 1
       Vector.new(-mv,mv)
   end
+
+  def SpiralMemory.next_corner(square)
+    ring = ring(square)
+    corners = ring_corners(ring)
+    if square <= corners[0]
+      corners[0]
+    elsif square <= corners[1]
+      corners[1]
+    elsif square <= corners[2]
+      corners[2]
+    elsif square <= corners[3]
+      corners[3]
+    else
+      raise "Square #{sqaure} does not fit in ring #{ring} with corners #{corners}!"
+    end
+  end
+
 end
