@@ -58,6 +58,18 @@ RSpec.describe SpiralMemory do
         expect(vector.x).to eq 0
         expect(vector.y).to eq 0
       end
+      it 'is in ring 1' do
+        ring = SpiralMemory.ring(square)
+        expect(ring).to eq 1
+      end
+    end
+
+    context 'square 4' do
+      square = 4
+      it 'is in ring 2' do
+        ring = SpiralMemory.ring(square)
+        expect(ring).to eq 2
+      end
     end
 
     context 'square 9' do
@@ -66,6 +78,26 @@ RSpec.describe SpiralMemory do
         vector = SpiralMemory.home_vector(square)
         expect(vector.x).to eq -1
         expect(vector.y).to eq 1
+      end
+      it 'is in ring 2' do
+        ring = SpiralMemory.ring(square)
+        expect(ring).to eq 2
+      end
+    end
+
+    context 'square 10' do
+      square = 10
+      it 'is in ring 3' do
+        ring = SpiralMemory.ring(square)
+        expect(ring).to eq 3
+      end
+    end
+
+    context 'square 16' do
+      square = 16
+      it 'is in ring 3' do
+        ring = SpiralMemory.ring(square)
+        expect(ring).to eq 3
       end
     end
 
@@ -76,6 +108,10 @@ RSpec.describe SpiralMemory do
         expect(vector.x).to eq -2
         expect(vector.y).to eq 2
       end
+      it 'is in ring 3' do
+        ring = SpiralMemory.ring(square)
+        expect(ring).to eq 3
+      end
     end
 
     context 'square 49' do
@@ -84,6 +120,10 @@ RSpec.describe SpiralMemory do
         vector = SpiralMemory.home_vector(square)
         expect(vector.x).to eq -3
         expect(vector.y).to eq 3
+      end
+      it 'is in ring 4' do
+        ring = SpiralMemory.ring(square)
+        expect(ring).to eq 4
       end
     end
   end
