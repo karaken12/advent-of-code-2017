@@ -2,6 +2,7 @@ require_relative '../lib/reader'
 
 input = File.read('data/day02')
 sheet = Reader.read_sheet(input)
-answer = sheet.checksum
+checksum = sheet.checksum
+division = sheet.divisible_sum
 
-puts "For spreadsheet:\n#{input}\nchecksum is #{answer}."
+puts "For spreadsheet:\n#{input}\nchecksum is #{checksum}\ndivisible sum is #{division}"
