@@ -11,4 +11,15 @@ RSpec.describe Spreadsheet do
       expect(sheet.checksum).to eq 18
     end
   end
+
+  context '5 9 2 8 // 9 4 7 3 // 3 8 6 5' do
+    it 'has a divisible sum of 9' do
+      sheet = Spreadsheet.new([
+        Row.new([5,9,2,8]),
+        Row.new([9,4,7,3]),
+        Row.new([3,8,6,5]),
+      ])
+      expect(sheet.divisible_sum).to eq 9
+    end
+  end
 end
