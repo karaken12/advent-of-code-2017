@@ -1,5 +1,5 @@
 class Spreadsheet
-  attr_reader :checksum
+  attr_reader :rows, :checksum
 
   def initialize(rows)
     @rows = rows
