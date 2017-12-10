@@ -1,3 +1,6 @@
+require_relative 'row'
+require_relative 'spreadsheet'
+
 class Reader
   def Reader.read_row(row_string)
     array = row_string.split(' ').map { |a| a.to_i }
