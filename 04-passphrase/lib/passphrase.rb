@@ -5,6 +5,6 @@ class Passphrase
   end
 
   def valid
-    @phrase.split(' ').group_by(&:itself).count{|k,v| v.count > 1} == 0
+    @phrase.split(' ').map{|p| p.chars.sort.join }.group_by(&:itself).count{|k,v| v.count > 1} == 0
   end
 end
