@@ -50,5 +50,13 @@ RSpec.describe Blocks do
         expect(blocks.array).to eq [2, 4, 1, 2]
       end
     end
+
+    context 'complete example' do
+      blocks = Blocks.new [0, 2, 7, 0]
+      it 'cycles after five steps' do
+        blocks.detect_cycle
+        expect(blocks.step).to eq 5
+      end
+    end
   end
 end

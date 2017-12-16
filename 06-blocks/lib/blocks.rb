@@ -1,5 +1,5 @@
 class Blocks
-  attr_reader :array
+  attr_reader :array, :step
 
   def initialize(array)
     @array = array
@@ -18,6 +18,20 @@ class Blocks
       block %= @array.size
       @array[block] += 1
       value -= 1
+    end
+  end
+
+  def detect_cycle
+    @step = 0
+    state_is_new = true
+    states = []
+    while state_is_new
+      states << Array.new(@array)
+      redistribute
+      @step += 1
+      if states.include? @array
+        state_is_new = false
+      end
     end
   end
 end
