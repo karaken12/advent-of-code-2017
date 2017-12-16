@@ -7,4 +7,4 @@ puts "Starting data: [#{data.join(', ')}]"
 blocks = Blocks.new data
 blocks.detect_cycle
 
-puts "This starting set of blocks produces a cycle after #{blocks.step} steps."
+puts "This starting set of blocks produces a cycle after #{blocks.step} steps; the cycle is #{blocks.cycle_length} steps long."

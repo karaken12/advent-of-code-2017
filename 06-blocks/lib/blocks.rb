@@ -1,5 +1,5 @@
 class Blocks
-  attr_reader :array, :step
+  attr_reader :array, :step, :cycle_length
 
   def initialize(array)
     @array = array
@@ -33,5 +33,6 @@ class Blocks
         state_is_new = false
       end
     end
+    @cycle_length = @step - states.index(@array)
   end
 end

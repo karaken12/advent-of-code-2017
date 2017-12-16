@@ -59,4 +59,12 @@ RSpec.describe Blocks do
       end
     end
   end
+
+  context 'part two' do
+    blocks = Blocks.new [0, 2, 7, 0]
+    it 'has a cycle length of four' do
+      blocks.detect_cycle
+      expect(blocks.cycle_length).to eq 4
+    end
+  end
 end
