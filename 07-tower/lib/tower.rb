@@ -33,6 +33,13 @@ class Tower
     if unheld.size != 1
       raise "Some problem here: #{unheld}"
     end
-    @bottom = programs.select{|p| p.name == unheld[0]}.first
+    @bottom = create_program_stack(programs, unheld[0])
+  end
+
+  def create_program_stack(programs, name)
+    prog = programs.select{|p| p.name == name}.first
+    # TODO: throw if none or more than one names are possible
+    holding = prog.holding.map{|p| create_program_stack(programs, p)}
+    Program.new(prog.name, prog.weight, holding)
   end
 end
