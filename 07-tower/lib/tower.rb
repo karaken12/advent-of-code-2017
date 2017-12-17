@@ -1,7 +1,15 @@
 class Tower
   attr_reader :bottom
 
-  Program = Struct.new(:name, :weight, :holding)
+  Program = Struct.new(:name, :weight, :holding) do
+    def balanced
+      holding.size == 0 || holding.map{|p| p.stack_weight}.uniq.size == 1
+    end
+
+    def stack_weight
+      weight + holding.sum{|p| p.stack_weight}
+    end
+  end
 
   def Tower.parse(lines)
     programs = []
