@@ -9,5 +9,13 @@ rescue LoadError
 end
 
 task 'solve' do
-  raise 'Solution not ready.'
+  require_relative 'lib/registers'
+  require_relative 'lib/instructions'
+  data = File.read('data/program')
+
+  instructions = Instructions.parse(data)
+  registers = Registers.new
+  registers.instruct instructions
+
+  puts "After completing this program, the largest value in any register is #{registers.largest_value}."
 end
