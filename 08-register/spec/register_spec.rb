@@ -16,6 +16,29 @@ RSpec.describe Registers do
         expect(registers.largest_value).to eq 1
       end
     end
+
+    context 'sample program step 1' do
+      instructions = Instructions.parse(
+        "b inc 5 if a > 1"
+      )
+      registers = Registers.new
+      it 'should leave a and b at 0' do
+        registers.instruct(instructions)
+        expect(registers['a']).to eq 0
+        expect(registers['b']).to eq 0
+      end
+    end
+
+    context 'sample program step 2' do
+      instructions = Instructions.parse(
+        "a inc 1 if b < 5"
+      )
+      registers = Registers.new
+      it 'should increase a to 1' do
+        registers.instruct(instructions)
+        expect(registers['a']).to eq 1
+      end
+    end
   end
 end
 
