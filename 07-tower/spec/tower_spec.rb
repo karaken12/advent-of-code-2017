@@ -97,5 +97,32 @@ RSpec.describe Tower do
         expect(program.balanced).to be false
       end
     end
+
+    context 'the sample tower' do
+      tower = Tower.parse(sample_data)
+      it 'is unbalanced at tknk' do
+        expect(tower.unbalanced_program.name).to eq 'tknk'
+      end
+      it 'is unbalanced by ugml' do
+        expect(tower.unbalanced_program.unbalancer.name).to eq 'ugml'
+      end
+      context 'ugml' do
+        program = tower.unbalanced_program
+        it 'should have a subtower weight of 243' do
+          expect(program.expected_subtower_weight).to eq 243
+        end
+      end
+    end
+
+    context 'a sample tower' do
+      context 'after balancing' do
+        tower = Tower.parse(sample_data)
+        unbalancer = tower.unbalancer
+        tower.balance
+        it 'ugml should have weight 60' do
+          expect(unbalancer.weight).to eq 60
+        end
+      end
+    end
   end
 end
