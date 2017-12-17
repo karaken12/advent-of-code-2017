@@ -40,6 +40,22 @@ RSpec.describe Registers do
       end
     end
   end
+
+  context 'part two' do
+    context 'the sample program' do
+      instructions = Instructions.parse(
+        "b inc 5 if a > 1
+        a inc 1 if b < 5
+        c dec -10 if a >= 1
+        c inc -20 if c == 10"
+      )
+      registers = Registers.new
+      it 'should have highest value overall of 10' do
+        registers.instruct(instructions)
+        expect(registers.highest_value).to eq 10
+      end
+    end
+  end
 end
 
 RSpec.describe Instructions do

@@ -17,5 +17,5 @@ task 'solve' do
   registers = Registers.new
   registers.instruct instructions
 
-  puts "After completing this program, the largest value in any register is #{registers.largest_value}."
+  puts "After completing this program, the largest value in any register is #{registers.largest_value}; the largest value reached was #{registers.highest_value}."
 end

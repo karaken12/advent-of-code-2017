@@ -1,6 +1,7 @@
 class Registers
   def initialize
     @registers = Hash.new
+    @highest_value = 0
   end
 
   def instruct(instructions)
@@ -11,6 +12,9 @@ class Registers
           amount = -amount
         end
         @registers[instruction.register] = self[instruction.register] + amount
+        if self[instruction.register] > @highest_value
+          @highest_value = self[instruction.register]
+        end
       end
     end
   end
@@ -46,5 +50,9 @@ class Registers
 
   def largest_value
     @registers.values.max
+  end
+
+  def highest_value
+    @highest_value
   end
 end
