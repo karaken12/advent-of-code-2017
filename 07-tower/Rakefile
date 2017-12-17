@@ -14,4 +14,13 @@ task 'solve' do
   tower = Tower.parse(data)
 
   puts "The bottom program for this tower is called #{tower.bottom.name}."
+  puts "The unbalanced program is #{tower.unbalanced_program.name}: it has stacks of"
+  tower.unbalanced_program.holding.each do |p|
+    puts "#{p.name}, #{p.stack_weight}."
+  end
+
+  unbalancer = tower.unbalancer
+  puts "The unbalancing program is #{unbalancer.name} (#{unbalancer.weight})."
+  tower.balance
+  puts "It should weigh #{unbalancer.weight}."
 end

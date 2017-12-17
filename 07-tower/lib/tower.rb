@@ -29,18 +29,18 @@ class Tower
         raise 'Not unbalanced!'
       end
 
-      sw0 = holding[0].stack_weight
-      sw1 = holding[1].stack_weight
-      sw2 = holding[2].stack_weight
-      if sw0 == sw1
-        2
-      elsif sw0 == sw2
-        1
-      elsif sw1 == sw2
-        0
-      else
-        raise "No weights agree: #{sw0}, #{sw1}, #{sw2}"
+      weights = holding.map{|p| p.stack_weight}
+      weight_counts = Hash.new(0)
+      weights.each do |weight|
+        weight_counts[weight] += 1
       end
+      weight_counts.each do |weight,count|
+        if count == 1
+          return weights.index(weight)
+        end
+      end
+
+      raise "No weight is unique: #{weights}"
     end
 
     def stack_weight
@@ -93,10 +93,9 @@ class Tower
     current = @bottom
     walk_tower(unbalanced, @bottom)
 
-    if unbalanced.size != 1
-      raise "Expected exactly one unbalanced program."
-    end
-    unbalanced[0]
+    # TODO: unbalanced should contain a stack with a unique end
+    # For now, just take the last one.
+    unbalanced.last
   end
 
   def unbalancer
