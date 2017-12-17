@@ -9,5 +9,9 @@ rescue LoadError
 end
 
 task 'solve' do
-  fail 'Solution not ready'
+  require_relative 'lib/tower'
+  data = File.read('data/tower')
+  tower = Tower.parse(data)
+
+  puts "The bottom program for this tower is called #{tower.bottom}."
 end
