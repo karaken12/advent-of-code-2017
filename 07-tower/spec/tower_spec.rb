@@ -19,7 +19,7 @@ RSpec.describe Tower do
         cntj (57)"
       )
       it 'has tknk as bottom program' do
-        expect(tower.bottom).to eq 'tknk'
+        expect(tower.bottom.name).to eq 'tknk'
       end
     end
   end

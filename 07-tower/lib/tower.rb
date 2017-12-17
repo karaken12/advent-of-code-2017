@@ -33,6 +33,6 @@ class Tower
     if unheld.size != 1
       raise "Some problem here: #{unheld}"
     end
-    @bottom = unheld[0]
+    @bottom = programs.select{|p| p.name == unheld[0]}.first
   end
 end

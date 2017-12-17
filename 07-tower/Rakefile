@@ -13,5 +13,5 @@ task 'solve' do
   data = File.read('data/tower')
   tower = Tower.parse(data)
 
-  puts "The bottom program for this tower is called #{tower.bottom}."
+  puts "The bottom program for this tower is called #{tower.bottom.name}."
 end
