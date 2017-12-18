@@ -114,5 +114,14 @@ RSpec.describe Stream do
         expect(groups).to eq 3
       end
     end
+
+    context 'three groups in two levels' do
+      stream = '{{},{}}'
+      it 'counts as three groups' do
+        tokens = Stream.tokenize(stream)
+        groups = Stream.count_groups(tokens)
+        expect(groups).to eq 3
+      end
+    end
   end
 end

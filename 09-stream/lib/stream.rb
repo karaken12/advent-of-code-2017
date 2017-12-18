@@ -29,6 +29,12 @@ class Stream
     end
   end
 
+  class Separator
+    def type
+      :separator
+    end
+  end
+
   def self.tokenize(stream)
     tokens = []
     in_garbage = false
@@ -65,6 +71,10 @@ class Stream
       end
       if char == '}'
         tokens << GroupEnd.new
+        next
+      end
+      if char == ','
+        tokens << Separator.new
         next
       end
       raise 'Don\'t know what to do.'
