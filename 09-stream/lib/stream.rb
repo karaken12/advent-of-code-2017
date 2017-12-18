@@ -86,4 +86,18 @@ class Stream
   def self.count_groups(tokens)
     tokens.select {|t| t.type == :group_start}.count
   end
+
+  def self.score(tokens)
+    running_total = 0
+    level = 0
+    tokens.each do |token|
+      if token.type == :group_start
+        level += 1
+        running_total += level
+      elsif token.type == :group_end
+        level -= 1
+      end
+    end
+    running_total
+  end
 end

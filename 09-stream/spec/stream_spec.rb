@@ -104,6 +104,11 @@ RSpec.describe Stream do
         groups = Stream.count_groups(tokens)
         expect(groups).to eq 1
       end
+      it 'has a score of 1' do
+        tokens = Stream.tokenize(stream)
+        score = Stream.score(tokens)
+        expect(score).to eq 1
+      end
     end
 
     context 'three nested groups' do
@@ -112,6 +117,11 @@ RSpec.describe Stream do
         tokens = Stream.tokenize(stream)
         groups = Stream.count_groups(tokens)
         expect(groups).to eq 3
+      end
+      it 'has a score of 6' do
+        tokens = Stream.tokenize(stream)
+        score = Stream.score(tokens)
+        expect(score).to eq 6
       end
     end
 
@@ -122,6 +132,11 @@ RSpec.describe Stream do
         groups = Stream.count_groups(tokens)
         expect(groups).to eq 3
       end
+      it 'has a score of 5' do
+        tokens = Stream.tokenize(stream)
+        score = Stream.score(tokens)
+        expect(score).to eq 5
+      end
     end
 
     context 'several groups' do
@@ -130,6 +145,11 @@ RSpec.describe Stream do
         tokens = Stream.tokenize(stream)
         groups = Stream.count_groups(tokens)
         expect(groups).to eq 6
+      end
+      it 'has a score of 16' do
+        tokens = Stream.tokenize(stream)
+        score = Stream.score(tokens)
+        expect(score).to eq 16
       end
     end
 
@@ -149,6 +169,11 @@ RSpec.describe Stream do
         groups = Stream.count_groups(tokens)
         expect(groups).to eq 1
       end
+      it 'has a score of 1' do
+        tokens = Stream.tokenize(stream)
+        score = Stream.score(tokens)
+        expect(score).to eq 1
+      end
     end
 
     context 'multiple groups with garbage each' do
@@ -167,6 +192,33 @@ RSpec.describe Stream do
         expect(tokens.select{|t| t.type == :separator}.count).to eq 0
         groups = Stream.count_groups(tokens)
         expect(groups).to eq 2
+      end
+    end
+
+    context 'multiple groups with garbage each' do
+      stream = '{{<ab>},{<ab>},{<ab>},{<ab>}}'
+      it 'has a score of 1' do
+        tokens = Stream.tokenize(stream)
+        score = Stream.score(tokens)
+        expect(score).to eq 9
+      end
+    end
+
+    context 'multiple groups with empty garbage' do
+      stream = '{{<!!>},{<!!>},{<!!>},{<!!>}}'
+      it 'has a score of 9' do
+        tokens = Stream.tokenize(stream)
+        score = Stream.score(tokens)
+        expect(score).to eq 9
+      end
+    end
+
+    context 'group tokens eaten by garbage' do
+      stream = '{{<a!>},{<a!>},{<a!>},{<ab>}}'
+      it 'has a score of 3' do
+        tokens = Stream.tokenize(stream)
+        score = Stream.score(tokens)
+        expect(score).to eq 3
       end
     end
   end
