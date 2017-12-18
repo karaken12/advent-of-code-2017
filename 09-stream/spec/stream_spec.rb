@@ -91,5 +91,14 @@ RSpec.describe Stream do
         expect(token.type).to be :garbage_content
       end
     end
+
+    context 'empty group' do
+      stream = '{}'
+      it 'is a single group' do
+        tokens = Stream.tokenize(stream)
+        expect(tokens.size).to eq 2
+        expect(tokens.map{|t| t.type}).to eq [:group_start, :group_end]
+      end
+    end
   end
 end

@@ -17,6 +17,18 @@ class Stream
     end
   end
 
+  class GroupStart
+    def type
+      :group_start
+    end
+  end
+
+  class GroupEnd
+    def type
+      :group_end
+    end
+  end
+
   def self.tokenize(stream)
     tokens = []
     in_garbage = false
@@ -45,6 +57,14 @@ class Stream
         tokens << GarbageStart.new
         in_garbage = true
         content = ''
+        next
+      end
+      if char == '{'
+        tokens << GroupStart.new
+        next
+      end
+      if char == '}'
+        tokens << GroupEnd.new
         next
       end
       raise 'Don\'t know what to do.'
