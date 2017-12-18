@@ -9,5 +9,10 @@ rescue LoadError
 end
 
 task 'solve' do
-  raise 'Solution not ready.'
+  require_relative 'lib/stream'
+  data = File.read('data/input').chomp
+  tokens = Stream.tokenize(data)
+  score = Stream.score(tokens)
+
+  puts "This input has a total score of #{score}."
 end
