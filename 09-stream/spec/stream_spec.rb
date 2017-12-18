@@ -6,9 +6,11 @@ RSpec.describe Stream do
       stream = '<>'
       it 'is empty garbage' do
         tokens = Stream.tokenize(stream)
-        expect(tokens.size).to eq 1
-        token = tokens[0]
-        expect(token.type).to be :garbage
+        expect(tokens.size).to eq 3
+        expect(tokens[0].type).to eq :garbage_start
+        expect(tokens[2].type).to eq :garbage_end
+        token = tokens[1]
+        expect(token.type).to be :garbage_content
         expect(token.content).to eq ''
       end
     end
@@ -17,9 +19,11 @@ RSpec.describe Stream do
       stream = '<random characters>'
       it 'is garbage' do
         tokens = Stream.tokenize(stream)
-        expect(tokens.size).to eq 1
-        token = tokens[0]
-        expect(token.type).to be :garbage
+        expect(tokens.size).to eq 3
+        expect(tokens[0].type).to eq :garbage_start
+        expect(tokens[2].type).to eq :garbage_end
+        token = tokens[1]
+        expect(token.type).to be :garbage_content
         expect(token.content).to eq 'random characters'
       end
     end
@@ -28,9 +32,11 @@ RSpec.describe Stream do
       stream = '<<<<>'
       it 'is garbage; extra <s are ignored' do
         tokens = Stream.tokenize(stream)
-        expect(tokens.size).to eq 1
-        token = tokens[0]
-        expect(token.type).to be :garbage
+        expect(tokens.size).to eq 3
+        expect(tokens[0].type).to eq :garbage_start
+        expect(tokens[2].type).to eq :garbage_end
+        token = tokens[1]
+        expect(token.type).to be :garbage_content
         expect(token.content).to eq '<<<'
       end
     end
@@ -39,9 +45,11 @@ RSpec.describe Stream do
       stream = '<{!>}>'
       it 'is garbage, because the first > is cancelled' do
         tokens = Stream.tokenize(stream)
-        expect(tokens.size).to eq 1
-        token = tokens[0]
-        expect(token.type).to be :garbage
+        expect(tokens.size).to eq 3
+        expect(tokens[0].type).to eq :garbage_start
+        expect(tokens[2].type).to eq :garbage_end
+        token = tokens[1]
+        expect(token.type).to be :garbage_content
         expect(token.content).to eq '{}'
       end
     end
@@ -50,9 +58,11 @@ RSpec.describe Stream do
       stream = '<!!>'
       it 'is garbage, because the second ! is cancelled' do
         tokens = Stream.tokenize(stream)
-        expect(tokens.size).to eq 1
-        token = tokens[0]
-        expect(token.type).to be :garbage
+        expect(tokens.size).to eq 3
+        expect(tokens[0].type).to eq :garbage_start
+        expect(tokens[2].type).to eq :garbage_end
+        token = tokens[1]
+        expect(token.type).to be :garbage_content
         expect(token.content).to eq ''
       end
     end
@@ -61,9 +71,11 @@ RSpec.describe Stream do
       stream = '<!!!>>'
       it 'is garbage, because the second ! and the first > are cancelled' do
         tokens = Stream.tokenize(stream)
-        expect(tokens.size).to eq 1
-        token = tokens[0]
-        expect(token.type).to be :garbage
+        expect(tokens.size).to eq 3
+        expect(tokens[0].type).to eq :garbage_start
+        expect(tokens[2].type).to eq :garbage_end
+        token = tokens[1]
+        expect(token.type).to be :garbage_content
         expect(token.content).to eq ''
       end
     end
@@ -72,9 +84,11 @@ RSpec.describe Stream do
       stream = '<{o"i!a,<{i<a>'
       it 'is garbage, which ends at the first >' do
         tokens = Stream.tokenize(stream)
-        expect(tokens.size).to eq 1
-        token = tokens[0]
-        expect(token.type).to be :garbage
+        expect(tokens.size).to eq 3
+        expect(tokens[0].type).to eq :garbage_start
+        expect(tokens[2].type).to eq :garbage_end
+        token = tokens[1]
+        expect(token.type).to be :garbage_content
       end
     end
   end

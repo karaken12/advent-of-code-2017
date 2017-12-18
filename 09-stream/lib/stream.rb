@@ -1,7 +1,19 @@
 class Stream
-  Garbage = Struct.new(:content) do
+  class GarbageStart
     def type
-      :garbage
+      :garbage_start
+    end
+  end
+
+  class GarbageEnd
+    def type
+      :garbage_end
+    end
+  end
+
+  GarbageContent = Struct.new(:content) do
+    def type
+      :garbage_content
     end
   end
 
@@ -22,13 +34,15 @@ class Stream
       if in_garbage
         if char == '>'
           in_garbage = false
-          tokens << Garbage.new(content)
+          tokens << GarbageContent.new(content)
+          tokens << GarbageEnd.new
           content = ''
         else
           content += char
         end
         next
       elsif char == '<'
+        tokens << GarbageStart.new
         in_garbage = true
         content = ''
         next
