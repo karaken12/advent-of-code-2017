@@ -8,8 +8,17 @@ class Stream
   def self.tokenize(stream)
     tokens = []
     in_garbage = false
+    cancelling_char = false
     content = ''
     stream.each_char do |char|
+      if cancelling_char
+        cancelling_char = false
+        next
+      end
+      if char == '!'
+        cancelling_char = true
+        next
+      end
       if in_garbage
         if char == '>'
           in_garbage = false
@@ -18,12 +27,13 @@ class Stream
         else
           content += char
         end
+        next
       elsif char == '<'
         in_garbage = true
         content = ''
-      else
-        raise 'Don\'t know what to do.'
+        next
       end
+      raise 'Don\'t know what to do.'
     end
     # TODO: check everything is empty
     tokens
