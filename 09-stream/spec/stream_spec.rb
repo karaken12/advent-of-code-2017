@@ -123,5 +123,51 @@ RSpec.describe Stream do
         expect(groups).to eq 3
       end
     end
+
+    context 'several groups' do
+      stream = '{{{},{},{{}}}}'
+      it 'counts as six groups' do
+        tokens = Stream.tokenize(stream)
+        groups = Stream.count_groups(tokens)
+        expect(groups).to eq 6
+      end
+    end
+
+    context 'group with garbaged groups' do
+      stream = '{<{},{},{{}}>}'
+      it 'counts as 1 group (which itself contains garbage)' do
+        tokens = Stream.tokenize(stream)
+        groups = Stream.count_groups(tokens)
+        expect(groups).to eq 1
+      end
+    end
+
+    context 'group with multiple garbages' do
+      stream = '{<a>,<a>,<a>,<a>}'
+      it 'counts as 1 group' do
+        tokens = Stream.tokenize(stream)
+        groups = Stream.count_groups(tokens)
+        expect(groups).to eq 1
+      end
+    end
+
+    context 'multiple groups with garbage each' do
+      stream = '{{<a>},{<a>},{<a>},{<a>}}'
+      it 'counts as 5 groups' do
+        tokens = Stream.tokenize(stream)
+        groups = Stream.count_groups(tokens)
+        expect(groups).to eq 5
+      end
+    end
+
+    context 'group tokens eaten by garbage' do
+      stream = '{{<!>},{<!>},{<!>},{<a>}}'
+      it 'counts as 2 groups (since all but the last > are canceled)' do
+        tokens = Stream.tokenize(stream)
+        expect(tokens.select{|t| t.type == :separator}.count).to eq 0
+        groups = Stream.count_groups(tokens)
+        expect(groups).to eq 2
+      end
+    end
   end
 end
