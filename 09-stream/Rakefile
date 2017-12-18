@@ -13,6 +13,9 @@ task 'solve' do
   data = File.read('data/input').chomp
   tokens = Stream.tokenize(data)
   score = Stream.score(tokens)
+  garbage = tokens.select{|t| t.type == :garbage_content}
+  garbage_length = garbage.sum{|t| t.content.length}
 
-  puts "This input has a total score of #{score}."
+  puts "This input has a total score of #{score};"
+  puts "the total amount of garbage is #{garbage_length} characters."
 end
