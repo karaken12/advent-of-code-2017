@@ -99,6 +99,20 @@ RSpec.describe Stream do
         expect(tokens.size).to eq 2
         expect(tokens.map{|t| t.type}).to eq [:group_start, :group_end]
       end
+      it 'counts as one group' do
+        tokens = Stream.tokenize(stream)
+        groups = Stream.count_groups(tokens)
+        expect(groups).to eq 1
+      end
+    end
+
+    context 'three nested groups' do
+      stream = '{{{}}}'
+      it 'counts as three groups' do
+        tokens = Stream.tokenize(stream)
+        groups = Stream.count_groups(tokens)
+        expect(groups).to eq 3
+      end
     end
   end
 end

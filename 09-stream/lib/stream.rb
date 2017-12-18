@@ -72,4 +72,8 @@ class Stream
     # TODO: check everything is empty
     tokens
   end
+
+  def self.count_groups(tokens)
+    tokens.select {|t| t.type == :group_start}.count
+  end
 end
