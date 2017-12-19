@@ -13,44 +13,40 @@ class Hex
       steps[:nw] = @steps.count('nw')
       steps[:n ] = @steps.count('n')
 
-      cancel = [steps[:n], steps[:s]].min
-      steps[:n] -= cancel
-      steps[:s] -= cancel
-      cancel = [steps[:ne], steps[:sw]].min
-      steps[:ne] -= cancel
-      steps[:sw] -= cancel
-      cancel = [steps[:nw], steps[:se]].min
-      steps[:nw] -= cancel
-      steps[:se] -= cancel
+      n = steps[:n] - steps[:s]
+      ne = steps[:ne] - steps[:sw]
+      se = steps[:se] - steps[:nw]
+      ne += se
+      n -= se
 
-      cancel = [steps[:ne], steps[:s]].min
-      steps[:ne] -= cancel
-      steps[:s] -= cancel
-      steps[:se] += cancel
+      if n < 0
+        se = [[-n,ne].min,0].max
+        n += se
+        ne -= se
+      else
+        se = [[n,-ne].min,0].max
+        n -= se
+        ne += se
+      end
 
-      cancel = [steps[:nw], steps[:s]].min
-      steps[:nw] -= cancel
-      steps[:s] -= cancel
-      steps[:sw] += cancel
+      output = []
+      if n >= 0
+        output += ['n']*n
+      else
+        output += ['s']*(-n)
+      end
+      if ne >= 0
+        output += ['ne']*ne
+      else
+        output += ['sw']*(-ne)
+      end
+      if se >= 0
+        output += ['se']*se
+      else
+        output += ['nw']*(-se)
+      end
 
-      cancel = [steps[:se], steps[:n]].min
-      steps[:se] -= cancel
-      steps[:n] -= cancel
-      steps[:ne] += cancel
-
-      cancel = [steps[:sw], steps[:n]].min
-      steps[:sw] -= cancel
-      steps[:n] -= cancel
-      steps[:nw] += cancel
-
-      (
-        ['ne']*steps[:ne] +
-        ['se']*steps[:se] +
-        ['s']*steps[:s] +
-        ['sw']*steps[:sw] +
-        ['nw']*steps[:nw] +
-        ['n']*steps[:n]
-      )
+      output
     end
   end
 
