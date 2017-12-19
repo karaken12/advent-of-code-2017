@@ -23,6 +23,26 @@ class Hex
       steps[:nw] -= cancel
       steps[:se] -= cancel
 
+      cancel = [steps[:ne], steps[:s]].min
+      steps[:ne] -= cancel
+      steps[:s] -= cancel
+      steps[:se] += cancel
+
+      cancel = [steps[:nw], steps[:s]].min
+      steps[:nw] -= cancel
+      steps[:s] -= cancel
+      steps[:sw] += cancel
+
+      cancel = [steps[:se], steps[:n]].min
+      steps[:se] -= cancel
+      steps[:n] -= cancel
+      steps[:ne] += cancel
+
+      cancel = [steps[:sw], steps[:n]].min
+      steps[:sw] -= cancel
+      steps[:n] -= cancel
+      steps[:nw] += cancel
+
       (
         ['ne']*steps[:ne] +
         ['se']*steps[:se] +
