@@ -28,5 +28,14 @@ RSpec.describe Hex do
         expect(result.size).to eq 2
       end
     end
+
+    context 'se,sw,se,sw,sw' do
+      steps = 'se,sw,se,sw,sw'
+      it 'is 3 steps away' do
+        path = Hex.parse(steps)
+        result = path.simplify
+        expect(result.size).to eq 3
+      end
+    end
   end
 end
