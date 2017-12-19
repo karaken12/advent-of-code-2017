@@ -13,6 +13,8 @@ task 'solve' do
   data = File.read('data/input').chomp
   tubes = Tubes.new(data)
   letters = tubes.follow
+  steps = tubes.follow_steps
 
-  puts "For this diagram, the letters the packet encouters are: '#{letters}'."
+  puts "For this diagram, the letters the packet encouters are: '#{letters}';"
+  puts "it takes #{steps} steps to complete its circuit."
 end

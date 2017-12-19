@@ -43,6 +43,22 @@ class Tubes
     letters
   end
 
+  def follow_steps
+    pos = find_start_position
+    steps = 1
+    dir = :down
+    while true
+      next_position, next_direction = find_next_position(pos, dir)
+      if !next_position
+        break
+      end
+      pos = next_position
+      dir = next_direction
+      steps += 1
+    end
+    steps
+  end
+
   def find_start_position
     x = 0
     pos = Position.new(@path, x, 0)

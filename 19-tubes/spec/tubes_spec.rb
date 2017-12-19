@@ -16,6 +16,10 @@ RSpec.describe Tubes do
         letters = tubes.follow
         expect(letters).to eq 'ABCDEF'
       end
+      it 'should go 38 steps' do
+        steps = tubes.follow_steps
+        expect(steps).to eq 38
+      end
     end
   end
 end
