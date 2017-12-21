@@ -10,7 +10,16 @@ class Pipes
   end
 
   def group_size
-    5
+    in_group = [0]
+    checked = []
+
+    while (in_group - checked).size > 0 do
+      check_id = (in_group - checked).first
+      prog = @programs.select{|p| p.id == check_id}.first
+      in_group = (in_group + prog.connections).uniq
+      checked << check_id
+    end
+    in_group.size
   end
 
   def self.parse(input)

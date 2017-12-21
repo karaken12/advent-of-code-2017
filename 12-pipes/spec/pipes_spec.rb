@@ -12,9 +12,9 @@ RSpec.describe Pipes do
       6 <-> 4, 5'
     )
     context 'the sample input' do
-      it 'has five programs connected to 0' do
+      it 'has six programs in the group containing 0' do
         pipes = Pipes.parse(sample_input)
-        expect(pipes.group_size).to eq 5
+        expect(pipes.group_size).to eq 6
       end
     end
   end
