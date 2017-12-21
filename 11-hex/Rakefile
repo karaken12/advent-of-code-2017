@@ -13,6 +13,8 @@ task 'solve' do
   data = File.read('data/input').chomp
   path = Hex.parse(data)
   answer = path.simplify
+  furthest = path.furthest
 
   puts "This path leaves the child #{answer.size} steps away."
+  puts "The furthest away it gets from the starting hex is #{furthest} steps away."
 end

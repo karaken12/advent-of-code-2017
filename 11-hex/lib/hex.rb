@@ -48,6 +48,15 @@ class Hex
 
       output
     end
+
+    def furthest
+      max = 0
+      for length in 1..@steps.size do
+        res = HexPath.new(@steps[0,length]).simplify.size
+        max = [max, res].max
+      end
+      max
+    end
   end
 
   def self.parse(path)
