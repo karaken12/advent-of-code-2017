@@ -16,6 +16,11 @@ RSpec.describe Pipes do
         pipes = Pipes.parse(sample_input)
         expect(pipes.group_size).to eq 6
       end
+
+      it 'splits into two groups' do
+        pipes = Pipes.parse(sample_input)
+        expect(pipes.groups.size).to eq 2
+      end
     end
   end
 end

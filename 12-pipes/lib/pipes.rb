@@ -10,7 +10,22 @@ class Pipes
   end
 
   def group_size
-    in_group = [0]
+    group_containing(0).size
+  end
+
+  def groups
+    groups = []
+    groups << group_containing(0)
+    left = @programs.map{|p| p.id} - groups.flatten
+    while left.size > 0
+      groups << group_containing(left.first)
+      left = @programs.map{|p| p.id} - groups.flatten
+    end
+    groups
+  end
+
+  def group_containing(start)
+    in_group = [start]
     checked = []
 
     while (in_group - checked).size > 0 do
@@ -19,7 +34,7 @@ class Pipes
       in_group = (in_group + prog.connections).uniq
       checked << check_id
     end
-    in_group.size
+    in_group
   end
 
   def self.parse(input)

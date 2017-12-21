@@ -13,6 +13,8 @@ task 'solve' do
   data = File.read('data/input').chomp
   pipes = Pipes.parse(data)
   answer = pipes.group_size
+  groups = pipes.groups.size
 
   puts "There are #{answer} programs in the group containing 0."
+  puts "The network splits into #{groups} groups in total."
 end
