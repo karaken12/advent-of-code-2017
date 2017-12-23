@@ -12,7 +12,8 @@ task :solve do
   require_relative 'lib/spiral'
 
   input = 312051
-  vector = SpiralMemory.home_vector(input)
+  spiral = SpiralMemory.build_spiral_to(input)
+  vector = spiral.current_square
   distance = vector.length
 
   puts "Data from square #{input} must be carried #{distance} steps."

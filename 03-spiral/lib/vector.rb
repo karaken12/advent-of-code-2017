@@ -1,12 +1,9 @@
-class Vector
-  attr_reader :x, :y
-
-  def initialize(x,y)
-    @x = x
-    @y = y
-  end
-
+Vector = Struct.new(:x, :y) do
   def length
     x.abs + y.abs
+  end
+
+  def to_s
+    "(#{x},#{y})"
   end
 end

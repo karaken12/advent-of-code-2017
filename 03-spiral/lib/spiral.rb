@@ -1,82 +1,66 @@
 require_relative 'vector'
 
 class SpiralMemory
-  def SpiralMemory.home_vector(square)
-    ring = ring(square)
-    next_corner = next_corner(square)
-    corner_home_vector = corner_home_vector(ring, ring_corners(ring).index(next_corner))
-    square_corner_vector = square_corner_vector(square, next_corner)
-    home_vector = Vector.new(corner_home_vector.x + square_corner_vector.x, corner_home_vector.y + square_corner_vector.y)
+  attr_reader :current_square
+  attr_writer :current_square
+
+  def initialize
+    @data = {}
   end
 
-  def SpiralMemory.ring(square)
-    root = Math.sqrt(square)
-    ring = ((root+1)/2).ceil
-  end
-
-  def SpiralMemory.ring_corners(ring)
-    corners = [0,0,0,0]
-    side = ring*2 - 1
-    corners[3] = side**2
-    corners[2] = corners[3] - (side-1)
-    corners[1] = corners[2] - (side-1)
-    corners[0] = corners[1] - (side-1)
-    corners
-  end
-
-  def SpiralMemory.corner_home_vector(ring, corner)
-    mv = ring - 1
-    case corner
-    when 0
-      Vector.new(-mv,-mv)
-    when 1
-      Vector.new(mv,-mv)
-    when 2
-      Vector.new(mv,mv)
-    when 3
-      Vector.new(-mv,mv)
+  def [](x,y)
+    vector = Vector.new(x,y)
+    if @data.has_key? vector
+      @data[Vector.new(x,y)]
     else
-      raise "Unknown corner #{corner}"
+      0
     end
   end
 
-  def SpiralMemory.square_home_vector(ring)
-      mv = ring - 1
-      Vector.new(-mv,mv)
+  def []=(x,y,value)
+    @data[Vector.new(x,y)] = value
   end
 
-  def SpiralMemory.next_corner(square)
-    ring = ring(square)
-    corners = ring_corners(ring)
-    if square <= corners[0]
-      corners[0]
-    elsif square <= corners[1]
-      corners[1]
-    elsif square <= corners[2]
-      corners[2]
-    elsif square <= corners[3]
-      corners[3]
-    else
-      raise "Square #{sqaure} does not fit in ring #{ring} with corners #{corners}!"
+  def self.build_spiral_to(target)
+    spiral = SpiralMemory.new
+
+    value = 1
+    x = 0
+    y = 0
+    spiral.current_square = Vector.new(x,y)
+    spiral[x,y] = value
+    direction = :east
+
+    while (value < target)
+      value += 1
+      case direction
+      when :north
+        y += 1
+        if spiral[x-1,y] == 0
+          direction = :west
+        end
+      when :east
+        x += 1
+        if spiral[x,y+1] == 0
+          direction = :north
+        end
+      when :south
+        y -= 1
+        if spiral[x+1,y] == 0
+          direction = :east
+        end
+      when :west
+        x -= 1
+        if spiral[x,y-1] == 0
+          direction = :south
+        end
+      else
+        raise "invalid direction #{direction}"
+      end
+      spiral.current_square = Vector.new(x,y)
+      spiral[x,y] = value
     end
-  end
 
-  def SpiralMemory.square_corner_vector(square, corner_square)
-    Vector.new(0,0)
-    mv = corner_square - square
-    corner = ring_corners(ring(square)).index(corner_square)
-    case corner
-    when 0
-      Vector.new(0,mv)
-    when 1
-      Vector.new(-mv,0)
-    when 2
-      Vector.new(0,-mv)
-    when 3
-      Vector.new(mv,0)
-    else
-      raise "Unknwon corner #{corner} (#{corner_square})"
-    end
+    spiral
   end
-
 end
