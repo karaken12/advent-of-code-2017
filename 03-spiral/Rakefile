@@ -17,4 +17,9 @@ task :solve do
   distance = vector.length
 
   puts "Data from square #{input} must be carried #{distance} steps."
+
+  spiral = SpiralMemory.build_sum_spiral_to(input)
+  value = spiral.current_value
+
+  puts "The first value written larger than the puzzle input is #{value}."
 end

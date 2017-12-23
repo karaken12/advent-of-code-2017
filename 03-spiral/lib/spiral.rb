@@ -115,4 +115,54 @@ class SpiralMemory
 
     spiral
   end
+
+  def self.build_sum_spiral_to(target_value)
+    spiral = SpiralMemory.new
+
+    square = 1
+    spiral.current_square = Vector.new(0,0)
+    spiral.current_value = 1
+    direction = :east
+
+    while (spiral.current_value < target_value)
+      square += 1
+      next_square = spiral.current_square.next(direction)
+      spiral.current_square = next_square
+
+      value = (
+        spiral[next_square.next(:north)] +
+        spiral[next_square.next(:northeast)] +
+        spiral[next_square.next(:east)] +
+        spiral[next_square.next(:southeast)] +
+        spiral[next_square.next(:south)] +
+        spiral[next_square.next(:southwest)] +
+        spiral[next_square.next(:west)] +
+        spiral[next_square.next(:northwest)]
+      )
+      spiral.current_value = value
+
+      case direction
+      when :north
+        if spiral[next_square.next(:west)] == 0
+          direction = :west
+        end
+      when :east
+        if spiral[next_square.next(:north)] == 0
+          direction = :north
+        end
+      when :south
+        if spiral[next_square.next(:east)] == 0
+          direction = :east
+        end
+      when :west
+        if spiral[next_square.next(:south)] == 0
+          direction = :south
+        end
+      else
+        raise "invalid direction #{direction}"
+      end
+    end
+
+    spiral
+  end
 end
