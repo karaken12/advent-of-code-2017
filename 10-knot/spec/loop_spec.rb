@@ -1,4 +1,5 @@
 require 'loop'
+require 'knothash'
 
 RSpec.describe Loop do
   context 'part one' do
@@ -43,6 +44,16 @@ RSpec.describe Loop do
           loop1.hash(lengths)
           expect(loop1.elements[0] * loop1.elements[1]).to eq 12
         end
+      end
+    end
+  end
+
+  context 'part two' do
+    context 'translate the text "1,2,3"' do
+      text = '1,2,3'
+      it 'becomes [49, 44, 50, 44, 51]' do
+        lengths = KnotHash.translate(text)
+        expect(lengths).to eq [49, 44, 50, 44, 51]
       end
     end
   end
