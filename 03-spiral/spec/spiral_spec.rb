@@ -56,4 +56,54 @@ RSpec.describe SpiralMemory do
       end
     end
   end
+
+  context 'part two' do
+    context 'square 1' do
+      square = 1
+      it 'has value 1' do
+        spiral = SpiralMemory.build_sum_spiral_to_square(square)
+        expect(spiral.current_value).to eq 1
+      end
+    end
+
+    context 'square 2' do
+      square = 2
+      it 'has value 1' do
+        spiral = SpiralMemory.build_sum_spiral_to_square(square)
+        expect(spiral.current_value).to eq 1
+      end
+    end
+
+    context 'square 3' do
+      square = 3
+      it 'has value 2' do
+        spiral = SpiralMemory.build_sum_spiral_to_square(square)
+        expect(spiral.current_value).to eq 2
+      end
+    end
+
+    context 'square 4' do
+      square = 4
+      it 'has value 4' do
+        spiral = SpiralMemory.build_sum_spiral_to_square(square)
+        expect(spiral.current_value).to eq 4
+      end
+    end
+
+    context 'square 5' do
+      square = 5
+      it 'has value 5' do
+        spiral = SpiralMemory.build_sum_spiral_to_square(square)
+        expect(spiral.current_value).to eq 5
+      end
+    end
+
+    context 'square 23' do
+      square = 23
+      it 'has value 806' do
+        spiral = SpiralMemory.build_sum_spiral_to_square(square)
+        expect(spiral.current_value).to eq 806
+      end
+    end
+  end
 end
