@@ -9,5 +9,12 @@ rescue LoadError
 end
 
 task 'solve' do
-  raise 'Solution not ready.'
+  require_relative 'lib/loop'
+  data = File.read('data/input').chomp
+  lengths = data.split(',').map{|l| l.to_i}
+  loop1 = Loop.new(256)
+  loop1.hash(lengths)
+  answer = loop1.elements[0] * loop1.elements[1]
+
+  puts "For the lengths #{lengths} the first two elements are #{loop1.elements[0]} and #{loop1.elements[1]}, which multiply to #{answer}."
 end
