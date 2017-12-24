@@ -15,7 +15,6 @@ class Loop
   end
 
   def hash(lengths)
-    @current_position = 0
     lengths.each do |length|
       reverse(length)
       @current_position += length + @skip

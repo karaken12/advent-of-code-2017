@@ -56,5 +56,45 @@ RSpec.describe Loop do
         expect(lengths).to eq [49, 44, 50, 44, 51]
       end
     end
+
+    context 'construct dense hash' do
+      sparse_hash = [65, 27, 9, 1, 4, 3, 40, 50, 91, 7, 6, 0, 2, 5, 68, 22]
+      it 'has a dense hash of 64' do
+        dense_hash = KnotHash.dense_hash(sparse_hash)
+        expect(dense_hash).to eq [64]
+      end
+    end
+
+    context 'with text ""' do
+      text = ''
+      it 'hashes to a2582a3a0e66e6e86e3812dcb672a272' do
+        hash = KnotHash.hash(text)
+        expect(hash).to eq 'a2582a3a0e66e6e86e3812dcb672a272'
+      end
+    end
+
+    context 'with text "AoC 2017"' do
+      text = 'AoC 2017'
+      it 'hashes to 33efeb34ea91902bb2f59c9920caa6cd' do
+        hash = KnotHash.hash(text)
+        expect(hash).to eq '33efeb34ea91902bb2f59c9920caa6cd'
+      end
+    end
+
+    context 'with text "1,2,3"' do
+      text = '1,2,3'
+      it 'hashes to 3efbe78a8d82f29979031a4aa0b16a9d' do
+        hash = KnotHash.hash(text)
+        expect(hash).to eq '3efbe78a8d82f29979031a4aa0b16a9d'
+      end
+    end
+
+    context 'with text "1,2,4"' do
+      text = '1,2,4'
+      it 'hashes to 63960835bcdc130f0b66d7ff4f6a5a8e' do
+        hash = KnotHash.hash(text)
+        expect(hash).to eq '63960835bcdc130f0b66d7ff4f6a5a8e'
+      end
+    end
   end
 end
