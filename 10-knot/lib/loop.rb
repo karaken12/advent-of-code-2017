@@ -4,6 +4,7 @@ class Loop
   def initialize(loop_size)
     @elements = *(0..(loop_size-1))
     @current_position = 0
+    @skip = 0
   end
 
   def reverse(length)
@@ -14,13 +15,12 @@ class Loop
   end
 
   def hash(lengths)
-    skip = 0
     @current_position = 0
     lengths.each do |length|
       reverse(length)
-      @current_position += length + skip
+      @current_position += length + @skip
       @current_position %= @elements.size
-      skip += 1
+      @skip += 1
     end
   end
 end
