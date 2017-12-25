@@ -24,6 +24,14 @@ class Firewall
     @layers[0].has_packet = true
   end
 
+  def packet_is_caught
+    if @packet_layer == nil
+      raise 'No packet injected'
+    end
+
+    @layers[@packet_layer].packet_is_caught
+  end
+
   class Layer
     attr_accessor :depth, :range, :has_packet
 
@@ -49,6 +57,10 @@ class Firewall
       else
         raise 'Invalid direction'
       end
+    end
+
+    def packet_is_caught
+      has_packet and @scanner_position == 0
     end
 
     def make(r)

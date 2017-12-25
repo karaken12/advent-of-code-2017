@@ -131,6 +131,28 @@ RSpec.describe Firewall do
                 [ ]     [ ]'
         end
       end
+
+      context 'a packet is caught' do
+        it 'is caught in layer 0' do
+          firewall = Firewall.new(rules)
+          firewall.inject
+          expect(firewall.packet_is_caught).to be true
+        end
+
+        it 'is caught in layer 6' do
+          firewall = Firewall.new(rules)
+          firewall.inject
+          6.times { firewall.advance }
+          expect(firewall.packet_is_caught).to be true
+        end
+
+        it 'is not caught in layer 2' do
+          firewall = Firewall.new(rules)
+          firewall.inject
+          2.times { firewall.advance }
+          expect(firewall.packet_is_caught).to be false
+        end
+      end
     end
   end
 end
