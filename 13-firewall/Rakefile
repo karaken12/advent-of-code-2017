@@ -9,5 +9,18 @@ rescue LoadError
 end
 
 task 'solve' do
-  raise 'Solution not ready'
+  require_relative 'lib/firewall'
+
+  data = File.read('data/input').chomp
+  rules = {}
+  data.lines.each do |line|
+    depth, range = line.split(':')
+    rules[depth.to_i] = range.to_i
+  end
+  firewall = Firewall.new(rules)
+  firewall.inject
+  firewall.traverse
+  answer = firewall.severity
+
+  puts "For the scanners recorded, the trip severity of a packet entering at picosecond 0 is #{answer}."
 end
