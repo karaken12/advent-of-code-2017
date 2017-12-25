@@ -1,8 +1,11 @@
 class Firewall
+  attr_accessor :severity
+
   def initialize(rules)
     @picoseconds = 0
     number_of_layers = rules.keys.max+1
     rules.default = 0
+    @severity = 0
 
     @layers = (0..number_of_layers-1).map{|depth| Layer.new(depth, rules[depth]) }
   end
@@ -15,7 +18,12 @@ class Firewall
     end
     if @packet_layer != nil
       @packet_layer += 1
-      @layers[@packet_layer].has_packet = true
+      if @packet_layer < @layers.size
+        @layers[@packet_layer].has_packet = true
+      end
+    end
+    if @packet_layer and packet_is_caught
+      @severity += (@packet_layer * @layers[@packet_layer].range)
     end
   end
 
@@ -24,12 +32,23 @@ class Firewall
     @layers[0].has_packet = true
   end
 
+  def traverse
+    if @packet_layer == nil
+      raise 'No packet injected'
+    end
+    @layers.size.times { advance }
+  end
+
   def packet_is_caught
     if @packet_layer == nil
       raise 'No packet injected'
     end
 
-    @layers[@packet_layer].packet_is_caught
+    if @packet_layer < @layers.size
+      @layers[@packet_layer].packet_is_caught
+    else
+      false
+    end
   end
 
   class Layer

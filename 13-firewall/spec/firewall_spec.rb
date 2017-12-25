@@ -153,6 +153,15 @@ RSpec.describe Firewall do
           expect(firewall.packet_is_caught).to be false
         end
       end
+
+      context 'a complete packet transition' do
+        it 'has severity 24' do
+          firewall = Firewall.new(rules)
+          firewall.inject
+          firewall.traverse
+          expect(firewall.severity).to eq 24
+        end
+      end
     end
   end
 end
