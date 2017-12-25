@@ -46,6 +46,91 @@ RSpec.describe Firewall do
 [ ]             [ ]     [ ]
                 [S]     [S]'
       end
+
+      context 'and an injected packet' do
+        it 'looks like this at picosecond 0' do
+          firewall = Firewall.new(rules)
+          firewall.inject
+          expect(firewall.to_s).to eq 'Picosecond 0:
+ 0   1   2   3   4   5   6 
+(S) [S] ... ... [S] ... [S]
+[ ] [ ]         [ ]     [ ]
+[ ]             [ ]     [ ]
+                [ ]     [ ]'
+        end
+
+        it 'looks like this at picosecond 1' do
+          firewall = Firewall.new(rules)
+          firewall.inject
+          firewall.advance
+          expect(firewall.to_s).to eq 'Picosecond 1:
+ 0   1   2   3   4   5   6 
+[ ] ( ) ... ... [ ] ... [ ]
+[S] [S]         [S]     [S]
+[ ]             [ ]     [ ]
+                [ ]     [ ]'
+        end
+
+        it 'looks like this at picosecond 2' do
+          firewall = Firewall.new(rules)
+          firewall.inject
+          2.times { firewall.advance }
+          expect(firewall.to_s).to eq 'Picosecond 2:
+ 0   1   2   3   4   5   6 
+[ ] [S] (.) ... [ ] ... [ ]
+[ ] [ ]         [ ]     [ ]
+[S]             [S]     [S]
+                [ ]     [ ]'
+        end
+
+        it 'looks like this at picosecond 3' do
+          firewall = Firewall.new(rules)
+          firewall.inject
+          3.times { firewall.advance }
+          expect(firewall.to_s).to eq 'Picosecond 3:
+ 0   1   2   3   4   5   6 
+[ ] [ ] ... (.) [ ] ... [ ]
+[S] [S]         [ ]     [ ]
+[ ]             [ ]     [ ]
+                [S]     [S]'
+        end
+
+        it 'looks like this at picosecond 4' do
+          firewall = Firewall.new(rules)
+          firewall.inject
+          4.times { firewall.advance }
+          expect(firewall.to_s).to eq 'Picosecond 4:
+ 0   1   2   3   4   5   6 
+[S] [S] ... ... ( ) ... [ ]
+[ ] [ ]         [ ]     [ ]
+[ ]             [S]     [S]
+                [ ]     [ ]'
+        end
+
+        it 'looks like this at picosecond 5' do
+          firewall = Firewall.new(rules)
+          firewall.inject
+          5.times { firewall.advance }
+          expect(firewall.to_s).to eq 'Picosecond 5:
+ 0   1   2   3   4   5   6 
+[ ] [ ] ... ... [ ] (.) [ ]
+[S] [S]         [S]     [S]
+[ ]             [ ]     [ ]
+                [ ]     [ ]'
+        end
+
+        it 'looks like this at picosecond 6' do
+          firewall = Firewall.new(rules)
+          firewall.inject
+          6.times { firewall.advance }
+          expect(firewall.to_s).to eq 'Picosecond 6:
+ 0   1   2   3   4   5   6 
+[ ] [S] ... ... [S] ... (S)
+[ ] [ ]         [ ]     [ ]
+[S]             [ ]     [ ]
+                [ ]     [ ]'
+        end
+      end
     end
   end
 end

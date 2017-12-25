@@ -9,17 +9,30 @@ class Firewall
 
   def advance
     @picoseconds += 1
-    @layers.each{|layer| layer.advance}
+    @layers.each do |layer|
+      layer.advance
+      layer.has_packet = false
+    end
+    if @packet_layer != nil
+      @packet_layer += 1
+      @layers[@packet_layer].has_packet = true
+    end
+  end
+
+  def inject
+    @packet_layer = 0
+    @layers[0].has_packet = true
   end
 
   class Layer
-    attr_accessor :depth, :range
+    attr_accessor :depth, :range, :has_packet
 
     def initialize(depth, range)
       @depth = depth
       @range = range
       @scanner_position = 0
       @scanner_direction = :increase
+      @has_packet = false
     end
 
     def advance
@@ -39,20 +52,25 @@ class Firewall
     end
 
     def make(r)
-      if @range == 0
-        if r == 0
-          '...'
+      if @range == 0 and r == 0
+        if has_packet
+          '(.)'
         else
-          '   '
+          '...'
         end
       else
         if r >= @range
           '   '
         else
           if r == @scanner_position
-            '[S]'
+            char = 'S'
           else
-            '[ ]'
+            char = ' '
+          end
+          if r == 0 and has_packet
+            "(#{char})"
+          else
+            "[#{char}]"
           end
         end
       end
